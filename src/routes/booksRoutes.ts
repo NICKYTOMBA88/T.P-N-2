@@ -1,9 +1,8 @@
 import { Router } from "express";
+import { getAllBooks } from "../controllers/booksControllers";
 
 const booksRoutes = Router();
 
-booksRoutes.get("/", (req, res) => {
-  res.send("Ruta de libros funcionando");
-});
+booksRoutes.get("/", getAllBooks);
 
 export { booksRoutes };

@@ -18,3 +18,5 @@ const getAllBooks = async (req: Request, res: Response): Promise<any> => {
     })
   }
 }
+
+export { getAllBooks }

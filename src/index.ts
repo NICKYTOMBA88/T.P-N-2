@@ -13,7 +13,7 @@ app.use("/api/books", booksRoutes)
 
 
 app.listen(PORT, () => {
-  console.log(`✅ Servidor en escucha en el puerto http://localhost:${PORT}`)
+  console.log(`✅ Servidor en escucha en el puerto http://localhost:${PORT}/api/books`)
   connectDB()
   console.log(process.env.URI_DB)
 })
