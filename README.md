@@ -4,10 +4,10 @@ API RESTful creada con **Node.js**, **Express** y **MongoDB** para gestionar una
 
 ## 🚀 Tecnologías usadas
 
-* Node.js
-* Express
-* MongoDB + Mongoose
-* TypeScript
+* Node.js  
+* Express  
+* MongoDB + Mongoose  
+* TypeScript  
 
 ## 📦 Instalación
 
@@ -22,8 +22,8 @@ npm install
 Crear un archivo `.env` en la raíz con el contenido:
 
 ```env
-PORT= 3000
-URI_DB= tu_uri_de_mongodb
+PORT=3000
+URI_DB=tu_uri_de_mongodb
 ```
 
 ## ▶️ Ejecución
@@ -40,12 +40,13 @@ http://localhost:3000/api/books
 
 ## 📬 Endpoints
 
-| Método | Ruta            | Descripción                |
-| ------ | --------------- | -------------------------- |
-| GET    | /api/books      | Obtener todos los libros   |
-| POST   | /api/books      | Crear un nuevo libro       |
-| DELETE | /api/books/\:id | Eliminar un libro por ID   |
-| PUT    | /api/books/\:id | Actualizar un libro por ID |
+| Método | Ruta              | Descripción                    |
+|--------|-------------------|--------------------------------|
+| GET    | /api/books        | Obtener todos los libros       |
+| GET    | /api/books/:id    | Obtener un libro por ID        |
+| POST   | /api/books        | Crear un nuevo libro           |
+| DELETE | /api/books/:id    | Eliminar un libro por ID       |
+| PATCH  | /api/books/:id    | Actualizar un libro por ID     |
 
 ## 📘 Esquema del Libro
 
@@ -61,4 +62,4 @@ http://localhost:3000/api/books
 
 ## ✅ Autor
 
-* Nicolas Gimenez 
+* Nicolas Gimenez
