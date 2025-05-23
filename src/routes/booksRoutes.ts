@@ -3,9 +3,14 @@ import { getAllBooks, deleteBook, createBook, updateBook } from "../controllers/
 
 const booksRoutes = Router();
 
+
 booksRoutes.get("/", getAllBooks);
-booksRoutes.post("/", createBook); // ✅ Ruta para crear libro
-booksRoutes.delete("/:id", deleteBook); // ✅ Corregido ":id"
+
+booksRoutes.post("/", createBook);
+
+booksRoutes.delete("/:id", deleteBook);
+
 booksRoutes.put("/:id", updateBook);
+
 
 export { booksRoutes };

@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./config/mongo";
 import { booksRoutes } from "./routes/booksRoutes";
 
+
 process.loadEnvFile();
 
 const PORT = process.env.PORT || 3000;
@@ -9,7 +10,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+
 app.use("/api/books", booksRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`✅ Servidor en escucha en el puerto http://localhost:${PORT}/api/books`);
