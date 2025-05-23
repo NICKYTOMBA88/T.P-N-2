@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { book } from "../models/booksModels"
 
-//Obetener todos los libros 
+// Obetener todos los libros 
 
 const getAllBooks = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -19,7 +19,26 @@ const getAllBooks = async (req: Request, res: Response): Promise<any> => {
     })
   }
 }
+// Mostrar libro por id
+const getBookById = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const id = req.params.id
+    const books = await book.findById(id)
+    if (!books) {
+      return res.status(404).json({
+        succes: false,
+        message: "No se encontró el libro con el id: " + id
+      })
+    }
+    return res.json({
+      succes: true,
+      data: books,
+      message: "Este es el libro con el id: " + id
+    })
+  } catch (error) {
 
+  }
+}
 // Crear libro
 
 const createBook = async (req: Request, res: Response) => {
@@ -88,4 +107,4 @@ const updateBook = async (req: Request, res: Response): Promise<any> => {
   }
 }
 
-export { getAllBooks, deleteBook, createBook, updateBook }
+export { getAllBooks, deleteBook, createBook, updateBook, getBookById }
