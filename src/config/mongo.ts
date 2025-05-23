@@ -4,6 +4,7 @@ process.loadEnvFile()
 
 const URI_DB = process.env.URI_DB || ""
 
+
 const connectDB = async () => {
   try {
     await connect(URI_DB)
@@ -12,5 +13,6 @@ const connectDB = async () => {
     console.log("Error al conectarse a mongodb", error)
   }
 }
+
 
 export { connectDB }
