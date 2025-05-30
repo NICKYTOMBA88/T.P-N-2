@@ -10,4 +10,5 @@ const bookSchema = new Schema({
 
 const book = model("Book", bookSchema);
 
-export { book }
+
+export { book, };
