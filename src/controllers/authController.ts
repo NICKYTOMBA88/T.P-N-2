@@ -23,7 +23,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
   try {
     const body = req.body
     console.log(body);
-    console.log("BODY:", body); // <- este log te dice si el body llega
+    console.log(body); // <- este log te dice si el body llega
 
     const hash = await bcryptjs.hash(body.password, 10)
     const newUser = new auth({ email: body.email, password: hash })
@@ -43,4 +43,40 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
   }
 }
 
-export { getUser, createUser }
+
+const login = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const body = req.body
+
+    const fondUser = await auth.findOne({ email: body.email })
+
+    if (!fondUser) {
+      return res.status(401).json({
+        succes: false,
+        message: "El email es incorrecto",
+      })
+    }
+
+    const match = await bcryptjs.compare(body.password, fondUser.password)
+
+    if (!match) {
+      res.status(401).json({
+        succes: false,
+        message: "contraseña incorrecta",
+      })
+    }
+
+    console.log(match)
+
+    res.json(fondUser)
+
+  } catch (error) {
+    const err = error as Error;
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
+  }
+}
+
+export { getUser, createUser, login }
