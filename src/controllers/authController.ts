@@ -1,7 +1,19 @@
 import { auth } from "../models/authModel";
 import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
-import jwt from "jsonwebtoken";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
+
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET || "default-secret";
+
+require('dotenv').config();
+
+
+
 
 const getUser = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -68,7 +80,9 @@ const login = async (req: Request, res: Response): Promise<any> => {
 
     }
     const expiresIn = 10
-    const token = jwt.sign({ _id: fondUser._id }, "contraseña secreta", { expiresIn }) //--> SE GENERA UN TOKEN CON LA ID DEL USUARIO Y SE LE DA UN TIEMPO DE VIDA DE 10 SEGUNDOS 
+    const token = jwt.sign({ _id: fondUser.id }, process.env.JWT_SECRET as string, {
+      expiresIn: "10s", // Expira en 1 hora
+    }); //--> SE GENERA UN TOKEN CON LA ID DEL USUARIO Y SE LE DA UN TIEMPO DE VIDA DE 10 SEGUNDOS 
 
     let tiempoRestante = 10
     const interval = setInterval(() => {
@@ -81,7 +95,7 @@ const login = async (req: Request, res: Response): Promise<any> => {
       }
     }, 1000)
 
-    res.json({ token, expiresIn })
+    res.json({ info: "Sesion iniciada, tiempo de uso 10 segundo ", })
 
   } catch (error) {
     const err = error as Error;
