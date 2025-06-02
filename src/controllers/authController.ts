@@ -67,13 +67,21 @@ const login = async (req: Request, res: Response): Promise<any> => {
 
 
     }
+    const expiresIn = 10
+    const token = jwt.sign({ _id: fondUser._id }, "contraseña secreta", { expiresIn }) //--> SE GENERA UN TOKEN CON LA ID DEL USUARIO Y SE LE DA UN TIEMPO DE VIDA DE 10 SEGUNDOS 
 
-    const token = jwt.sign({ _id: fondUser._id }, "contraseña secreta", { expiresIn: "10s" })
+    let tiempoRestante = 10
+    const interval = setInterval(() => {
+      if (tiempoRestante <= 0) {
+        clearInterval(interval)
+        console.log("⛔ Token expirado")
+      } else {
+        console.log(`⏳ Tiempo restante: ${tiempoRestante}s`)
+        tiempoRestante--
+      }
+    }, 1000)
 
-    console.log(match)
-
-    res.json(fondUser)
-    res.json({ credencial: "tenes acceso al sist hasta las 12" })
+    res.json({ token, expiresIn })
 
   } catch (error) {
     const err = error as Error;
