@@ -1,6 +1,7 @@
 import { auth } from "../models/authModel";
 import { Request, Response } from "express";
 import bcryptjs from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const getUser = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -23,11 +24,10 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
   try {
     const body = req.body
     console.log(body);
-    console.log(body); // <- este log te dice si el body llega
 
-    const hash = await bcryptjs.hash(body.password, 10)
-    const newUser = new auth({ email: body.email, password: hash })
-    await newUser.save()
+    const hash = await bcryptjs.hash(body.password, 10) //--> DE ESTA FORMA SE HASHEA
+    const newUser = new auth({ email: body.email, password: hash }) //--> SE CREA UN NUEVO USUARIO
+    await newUser.save() //--> SE GUARDA EN LA DB
     res.status(201).json({
       succes: true,
       data: { _id: newUser.id, email: newUser.email },
@@ -48,7 +48,7 @@ const login = async (req: Request, res: Response): Promise<any> => {
   try {
     const body = req.body
 
-    const fondUser = await auth.findOne({ email: body.email })
+    const fondUser = await auth.findOne({ email: body.email }) //--> SE BUSCA EL USUARIO EN LA DB
 
     if (!fondUser) {
       return res.status(401).json({
@@ -57,18 +57,23 @@ const login = async (req: Request, res: Response): Promise<any> => {
       })
     }
 
-    const match = await bcryptjs.compare(body.password, fondUser.password)
+    const match = await bcryptjs.compare(body.password, fondUser.password) //--> SE COMPARAN AMBAS CONTRASEÑAS HASHEADAS, LA GUARDADA Y LA RECIBIDA EN EL LOGIN
 
     if (!match) {
       res.status(401).json({
         succes: false,
         message: "contraseña incorrecta",
       })
+
+
     }
+
+    const token = jwt.sign({ _id: fondUser._id }, "contraseña secreta", { expiresIn: "10s" })
 
     console.log(match)
 
     res.json(fondUser)
+    res.json({ credencial: "tenes acceso al sist hasta las 12" })
 
   } catch (error) {
     const err = error as Error;
