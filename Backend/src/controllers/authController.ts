@@ -79,9 +79,9 @@ const login = async (req: Request, res: Response): Promise<any> => {
 
 
     }
-    const expiresIn = 10
+    const expiresIn = "1m"
     const token = jwt.sign({ _id: fondUser.id }, process.env.JWT_SECRET as string, {
-      expiresIn: "10s", // Expira en 1 hora
+      expiresIn: "1m", // Expira en 1 hora
     }); //--> SE GENERA UN TOKEN CON LA ID DEL USUARIO Y SE LE DA UN TIEMPO DE VIDA DE 10 SEGUNDOS 
 
     let tiempoRestante = 10
@@ -95,7 +95,7 @@ const login = async (req: Request, res: Response): Promise<any> => {
       }
     }, 1000)
 
-    res.json({ info: "Sesion iniciada, tiempo de uso 10 segundo ", })
+    res.json({ info: "Sesion iniciada, tiempo de uso 10 segundo ", data: token })
 
   } catch (error) {
     const err = error as Error;
