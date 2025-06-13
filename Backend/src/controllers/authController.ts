@@ -84,7 +84,7 @@ const login = async (req: Request, res: Response): Promise<any> => {
       expiresIn: "1m", // Expira en 1 hora
     }); //--> SE GENERA UN TOKEN CON LA ID DEL USUARIO Y SE LE DA UN TIEMPO DE VIDA DE 10 SEGUNDOS 
 
-    let tiempoRestante = 10
+    let tiempoRestante = 60
     const interval = setInterval(() => {
       if (tiempoRestante <= 0) {
         clearInterval(interval)

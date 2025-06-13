@@ -16,27 +16,26 @@ const Login = () => {
     }
 
     const token = await login(dataUser)
-    console.log(token)
+    localStorage.setItem(JSON.stringify(token));
+
 
   }
   const login = async (body) => {
-
     try {
-      const response = await fetch("http://localhost:3000/api/auth/loginc", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
-      })
+      });
 
-      const token = response.json()
-      return token
+      const data = await response.json(); // 👈 Aca va el await
+      return data;
 
     } catch (error) {
-
-      console.log(error)
-
+      console.log(error);
     }
-  }
+  };
+
 
   return (
     <Layout>
